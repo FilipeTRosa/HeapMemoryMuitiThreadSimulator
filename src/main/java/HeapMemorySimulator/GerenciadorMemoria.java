@@ -81,4 +81,8 @@ public class GerenciadorMemoria {
     }
 
     public int tamanhoHeap (){ return heap.getTamanho();}
+
+    public EstatisticasMemoria getEstatisticas() {
+        return stats;
+    }
 }

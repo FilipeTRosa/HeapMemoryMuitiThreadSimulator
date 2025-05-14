@@ -1,5 +1,6 @@
 package HeapMemorySimulator;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,7 +27,7 @@ import java.util.Scanner;
  * Gera um lote de requisições, tenta alocar, e imprime estatísticas ao final.
  */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         int opcao;
         long inicio, fim;
@@ -64,6 +65,8 @@ public class Main {
 
                     //cria uma List de reqMem com chamada "lote"
                     List<RequisicaoMemoria> lote = gerador.gerarLote(totalReq, min, max);
+                    PersistenciaRequisicoes.salvarLote("lote.txt", lote); // salva o lote para testes futuros
+
 
                     //teste com o alocar padrão
                     System.out.println("\n===Memoria sem desfragmentar===");
@@ -77,6 +80,8 @@ public class Main {
                     gerenteMemoria.imprimirEstatisticas();
 
                     gerenteMemoria.resetarHeap();
+                    gerenteMemoria.getEstatisticas().salvarCSV("estatisticas.csv");
+
 
                     //teste com o alocar que desfragmenta
                     System.out.println("\n===Memoria com desfragmentação===");

@@ -1,5 +1,9 @@
 package HeapMemorySimulator;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class EstatisticasMemoria {
     private int totalRequisicoes = 0;
     private long somaTamanhos = 0;
@@ -46,6 +50,17 @@ public class EstatisticasMemoria {
         System.out.println("Tempo execução: " + tempoExecucao + " ms");
         System.out.println("Falhas de alocação: " + falhas);
         System.out.println("Desfragmentações: " + desfragmentacoes);
+    }
+    public void salvarCSV(String caminho) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
+            writer.write("totalRequisicoes,tamanhoMedio,desalocadas,mediaDesalocacao,tempoExecucao,falhas,desfragmentacoes\n");
+            long tamanhoMedio = (totalRequisicoes > 0 ? somaTamanhos / totalRequisicoes : 0);
+            long mediaDesalocacao = (desalocadas > 0 ? somaDesalocadas / desalocadas : 0);
+            writer.write(String.format("%d,%d,%d,%d,%d,%d,%d\n",
+                    totalRequisicoes, tamanhoMedio, desalocadas, mediaDesalocacao, tempoExecucao, falhas, desfragmentacoes));
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar estatísticas: " + e.getMessage());
+        }
     }
 }
 
