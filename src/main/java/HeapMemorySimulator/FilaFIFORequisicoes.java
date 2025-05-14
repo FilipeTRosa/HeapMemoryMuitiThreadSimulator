@@ -19,8 +19,8 @@ public class FilaFIFORequisicoes {
 
         while (!fila.isEmpty() && liberados < totalParaLiberar) {
             RequisicaoMemoria req = fila.poll();
-            heap.liberarRequisicao(req.getId());
-            liberados += req.getTamanho();
+            heap.liberarRequisicao(req.getId()); // testar com liberados += na frente
+            liberados += req.getTamanho(); // pode ser resumido em liberados += heap.liberarRequisicao(req.getId()); na linha de cima
             reqLiberadas++;
             //System.out.println("Total Liberados: " + liberados);
         }

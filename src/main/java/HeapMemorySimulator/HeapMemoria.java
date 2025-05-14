@@ -36,6 +36,7 @@ public class HeapMemoria {
 
     public void resetar() {
         for (int i = 0; i < heap.length; i++) heap[i] = 0;
+        this.posicoesOcupadas = 0;
     }
 
     public boolean alocarFirstFit(int id, int tamanho) {
@@ -78,6 +79,10 @@ public class HeapMemoria {
             }
         }
         heap = novaHeap;
+    }
+
+    public int getValorNaPosicao(int i) {
+        return heap[i];
     }
 
     public double calcularFragmentacao() {
