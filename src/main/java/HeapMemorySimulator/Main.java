@@ -69,20 +69,20 @@ public class Main {
 
 
                     //teste com o alocar padrão
-                    System.out.println("\n===Memoria sem desfragmentar===");
-                    inicio = System.currentTimeMillis();
-                    for (RequisicaoMemoria r : lote) { //enquanto houver req em lote
-                        gerenteMemoria.alocar(r,false, 30); //aloca cada req
-                    }
-                    fim = System.currentTimeMillis();
-                    System.out.println(gerenteMemoria.toString());
-                    gerenteMemoria.setTempoExecucao(fim - inicio);
-                    gerenteMemoria.imprimirEstatisticas();
+//                    System.out.println("\n===Memoria sem desfragmentar===");
+//                    inicio = System.currentTimeMillis();
+//                    for (RequisicaoMemoria r : lote) { //enquanto houver req em lote
+//                        gerenteMemoria.alocar(r,false, 30); //aloca cada req
+//                    }
+//                    fim = System.currentTimeMillis();
+//                    System.out.println(gerenteMemoria.toString());
+//                    gerenteMemoria.setTempoExecucao(fim - inicio);
+//                    gerenteMemoria.imprimirEstatisticas();
+//
+//                    gerenteMemoria.resetarHeap();
+//                    gerenteMemoria.getEstatisticas().salvarCSV("estatisticas.csv");
 
                     gerenteMemoria.resetarHeap();
-                    gerenteMemoria.getEstatisticas().salvarCSV("estatisticas.csv");
-
-
                     //teste com o alocar que desfragmenta
                     System.out.println("\n===Memoria com desfragmentação===");
                     inicio = System.currentTimeMillis();
@@ -92,8 +92,10 @@ public class Main {
                     fim = System.currentTimeMillis();
                     gerenteMemoria.setTempoExecucao(fim - inicio);
                     gerenteMemoria.imprimirEstatisticas();
+                    gerenteMemoria.getEstatisticas().salvarCSV("estatisticas.csv");
+                    gerenteMemoria.getEstatisticas().salvarOcupacaoHeap("ocupacao.txt");
 
-                    gerenteMemoria.resetarHeap();
+                    //gerenteMemoria.resetarHeap();
                     break;
                 case 2:
                     System.out.println("Exibindo estado da heap...");

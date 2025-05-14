@@ -3,10 +3,31 @@ package HeapMemorySimulator;
 
 public class HeapMemoria {
     private int[] heap;
+    private int posicoesOcupadas;
 
     public HeapMemoria(int tamanhoKB) {
         int totalInteiros = (tamanhoKB * 1024) / 4;
         this.heap = new int[totalInteiros];
+    }
+
+    public void incrementaOcupacao(int valor){
+        this.posicoesOcupadas += valor;
+    }
+
+    public void decrementaOcupacao(int valor){
+        this.posicoesOcupadas -= valor;
+    }
+
+    public int getOcupacaoInt(){
+        return this.posicoesOcupadas;
+    }
+
+    public double getPorcentagemOcupacao(){
+        if(this.posicoesOcupadas == 0){
+            //throw new ArithmeticException("Não é possível calcular porcentagem: Posicoes ocupadas é zero.");
+            return 0.0;
+        }
+        return (this.posicoesOcupadas * 100.0) / this.heap.length;
     }
 
     public int getTamanho() {
@@ -30,6 +51,7 @@ public class HeapMemoria {
                 for (int j = 0; j < tamanho; j++) {
                     heap[i + j] = id;
                 }
+                incrementaOcupacao(tamanho);
                 return true;
             }
         }

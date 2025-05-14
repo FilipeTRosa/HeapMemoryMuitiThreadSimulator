@@ -20,6 +20,7 @@ public class GerenciadorMemoria {
 
     public boolean alocar(RequisicaoMemoria req, boolean comDesfragmentacao, int porcentagem) {
         stats.novaRequisicao(req.getTamanho());
+        stats.adicionaOcupacao(heap.getPorcentagemOcupacao());
 
         boolean sucesso = heap.alocarFirstFit(req.getId(), req.getTamanho());
         if (sucesso) {
@@ -40,26 +41,28 @@ public class GerenciadorMemoria {
         sucesso = heap.alocarFirstFit(req.getId(), req.getTamanho());
         if (sucesso) {
             fila.adicionar(req);
+           // stats.adicionaOcupacao(heap.getPorcentagemOcupacao());
             return true;
         }
 
         //falhou e está ativada a desfregmentação.
-        if (comDesfragmentacao) {
-            heap.desfragmentar(); //desfragmenta
-            stats.incrementarDesfragmentacoes(); //incrementa desfragmentacoes
-        }
-        boolean frag = heap.isFragmentacaoCritica(req.getTamanho()); // testa fragmentacao
-        if (frag) {
-            int i = fila.liberarMemoria(heap, heap.getTamanho(), porcentagem);
-            stats.incrementarDesalocadas(i);
-        }
+        //if (comDesfragmentacao) {
+        heap.desfragmentar(); //desfragmenta
+        stats.incrementarDesfragmentacoes(); //incrementa desfragmentacoes
+        //}
+        //boolean frag = heap.isFragmentacaoCritica(req.getTamanho()); // testa fragmentacao
+        //if (frag) {
+        stats.incrementarDesalocadas(fila.liberarMemoria(heap, heap.getTamanho(), porcentagem));
+        //}
         sucesso = heap.alocarFirstFit(req.getId(), req.getTamanho());
         if (sucesso) {
             fila.adicionar(req);
+            //stats.adicionaOcupacao(heap.getPorcentagemOcupacao());
             return true;
         }
         //se tudo deu errado... GRAXA
         stats.incrementarFalhas();
+       // stats.adicionaOcupacao(heap.getPorcentagemOcupacao());
         return false;
     }
 

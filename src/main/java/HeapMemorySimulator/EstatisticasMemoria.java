@@ -1,8 +1,11 @@
 package HeapMemorySimulator;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EstatisticasMemoria {
     private int totalRequisicoes = 0;
@@ -12,10 +15,19 @@ public class EstatisticasMemoria {
     private long tempoExecucao = 0;
     private int falhas = 0;
     private int desfragmentacoes = 0;
+    private List<Double> ocupacaoHeap;
+
+    public EstatisticasMemoria() {
+        this.ocupacaoHeap = new ArrayList<>();
+    }
 
     public void novaRequisicao(int tamanho) {
         totalRequisicoes++;
         somaTamanhos += tamanho;
+    }
+
+    public void adicionaOcupacao(double valor) {
+        this.ocupacaoHeap.add(valor);
     }
 
     public void novaDesalocacao(int tamanho) {
@@ -52,8 +64,14 @@ public class EstatisticasMemoria {
         System.out.println("Desfragmentações: " + desfragmentacoes);
     }
     public void salvarCSV(String caminho) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
-            writer.write("totalRequisicoes,tamanhoMedio,desalocadas,mediaDesalocacao,tempoExecucao,falhas,desfragmentacoes\n");
+        File arquivo = new File(caminho);
+        boolean arquivoExiste = arquivo.exists();
+        boolean escreverCabecalho = !arquivoExiste || arquivo.length() == 0;
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo, true))) {
+            if (escreverCabecalho) {
+                writer.write("totalRequisicoes,tamanhoMedio,desalocadas,mediaDesalocacao,tempoExecucao,falhas,desfragmentacoes\n");
+            }
             long tamanhoMedio = (totalRequisicoes > 0 ? somaTamanhos / totalRequisicoes : 0);
             long mediaDesalocacao = (desalocadas > 0 ? somaDesalocadas / desalocadas : 0);
             writer.write(String.format("%d,%d,%d,%d,%d,%d,%d\n",
@@ -62,5 +80,23 @@ public class EstatisticasMemoria {
             System.err.println("Erro ao salvar estatísticas: " + e.getMessage());
         }
     }
+
+    public void salvarOcupacaoHeap(String caminho) {
+        if (ocupacaoHeap == null || ocupacaoHeap.isEmpty()) {
+            System.out.println("Nenhum dado de ocupação para salvar.");
+            return;
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
+            for (double valor : ocupacaoHeap) {
+                writer.write(valor + "\n");
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar ocupação da heap: " + e.getMessage());
+        }
+    }
+
+
+
 }
 

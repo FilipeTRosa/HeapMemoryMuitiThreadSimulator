@@ -24,7 +24,7 @@ public class FilaFIFORequisicoes {
             reqLiberadas++;
             //System.out.println("Total Liberados: " + liberados);
         }
-
+        heap.decrementaOcupacao(liberados);
         return reqLiberadas;
     }
 }
