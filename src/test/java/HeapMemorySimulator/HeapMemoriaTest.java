@@ -11,6 +11,7 @@ class HeapMemoriaTest {
     @BeforeEach
     void setup() {
        heap = new HeapMemoria(1); // 1 KB de heap = 256 ints
+       //heap.alocarFirstFit(1, 10);
     }
 
     @Test
@@ -65,10 +66,19 @@ class HeapMemoriaTest {
 
     @Test
     void desfragmentar() {
+        heap.alocarFirstFit(5, 10);
+        heap.alocarFirstFit(6, 10);
+        heap.alocarFirstFit(7, 8);
+        heap.alocarFirstFit(8, 10);
+
+        assertEquals(5, heap.getValorNaPosicao(9)); //verifica se alocou certo
+        assertEquals(8, heap.getValorNaPosicao(29));//verifica se alocou certo
     }
 
     @Test
     void calcularFragmentacao() {
+        heap.alocarFirstFit(1, 10);
+        assertEquals(96.1, heap.calcularFragmentacao(), 0.01);
     }
 
     @Test
