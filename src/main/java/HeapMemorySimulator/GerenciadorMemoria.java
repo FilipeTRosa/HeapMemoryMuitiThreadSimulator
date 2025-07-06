@@ -17,7 +17,9 @@ public class GerenciadorMemoria {
         heap.resetar();
         stats.resetarStats();
     }
-
+    public double getOcupacao(){
+        return heap.getPorcentagemOcupacao();
+    }
     public boolean alocar(RequisicaoMemoria req, boolean comDesfragmentacao, int porcentagem) {
         stats.novaRequisicao(req.getTamanho());
         stats.adicionaOcupacao(heap.getPorcentagemOcupacao());

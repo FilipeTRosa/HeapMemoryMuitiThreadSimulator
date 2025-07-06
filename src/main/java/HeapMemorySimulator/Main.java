@@ -46,7 +46,7 @@ public class Main {
             System.out.println("1 - Gerar lote de requisições");
             System.out.println("2 - Exibir estado da heap");
             System.out.println("3 - ...");
-            System.out.println("4 - ...");
+            System.out.println("4 - Imprimir Heap");
             System.out.println("5 - Reiniciar simulador");
             System.out.println("6 - Sair");
             System.out.print("Escolha uma opção: ");
@@ -102,6 +102,10 @@ public class Main {
                     //Aqui vamos imprimir os Status atuais da heap
                     // tamanho.... % Ocupara.... Fragmentacao
                     //
+                    System.out.println("Tamnho Heap = " + gerenteMemoria.tamanhoHeap());
+                    System.out.println("Fragmentação = " + gerenteMemoria.calcularFragmentacaoTotal() + "%" );
+                    System.out.println("Ocupação Heap = " + gerenteMemoria.getOcupacao() +"%");
+
                     break;
                 case 3:
                     System.out.println("Exibindo estatísticas...");
@@ -109,7 +113,8 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("...");
-
+                    String retorno = gerenteMemoria.toString();
+                    System.out.println(retorno);
                     break;
                 case 5:
                     System.out.println("Reiniciando simulador...");

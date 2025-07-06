@@ -42,11 +42,15 @@ public class HeapMemoria {
     public boolean alocarFirstFit(int id, int tamanho) {
         for (int i = 0; i <= heap.length - tamanho; i++) {
             boolean podeAlocar = true;
-            for (int j = 0; j < tamanho; j++) {
-                if (heap[i + j] != 0) {
-                    podeAlocar = false;
-                    break;
+            if(heap[i] == 0) {
+                for (int j = 0; j < tamanho; j++) {
+                    if (heap[i + j] != 0) {
+                        podeAlocar = false;
+                        break;
+                    }
                 }
+            }else {
+                podeAlocar = false;
             }
             if (podeAlocar) {
                 for (int j = 0; j < tamanho; j++) {
