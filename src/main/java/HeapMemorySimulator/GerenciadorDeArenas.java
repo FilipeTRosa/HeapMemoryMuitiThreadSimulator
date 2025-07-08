@@ -33,7 +33,7 @@ public class GerenciadorDeArenas {
 
     public boolean alocar(RequisicaoMemoria req) {
         stats.novaRequisicao(req.getTamanho());
-        // NOVO: Registra a ocupação atual do sistema ANTES de tentar alocar.
+        //Registra a ocupação atual do sistema ANTES de tentar alocar.
         //stats.adicionaOcupacao(getOcupacaoTotalAgregada());
         // Passo 1: Tentativa de alocação normal, concorrente, com trava de leitura.
         if (tentarAlocarComTravaDeLeitura(req)) {
@@ -79,7 +79,7 @@ public class GerenciadorDeArenas {
     }
 
     /**
-     * NOVO: Método público para forçar uma desfragmentação global de todas as partições.
+     * Método público para forçar uma desfragmentação global de todas as partições.
      * Este método é seguro para ser chamado externamente (ex: do Main para testes),
      * pois ele adquire a trava de escrita exclusiva, pausando todas as outras
      * operações para reorganizar a memória de forma segura.
@@ -96,7 +96,7 @@ public class GerenciadorDeArenas {
     }
 
     /**
-     * NOVO: Método que comanda todas as partições para se desfragmentarem.
+     *  Método que comanda todas as partições para se desfragmentarem.
      * SÓ PODE SER CHAMADO de um contexto que já detém a travaEscrita.
      */
     private void desfragmentarTodasAsParticoes() {
@@ -125,7 +125,7 @@ public class GerenciadorDeArenas {
         stats.incrementarDesalocadas(reqLiberadas);
     }
 
-    // --- MÉTODOS PÚBLICOS PARA ACESSAR AS ESTATÍSTICAS ---
+    // --- MÉTODOS PARA ACESSAR AS ESTATÍSTICAS ---
     public void imprimirEstatisticas() {
         this.stats.imprimir();
     }
@@ -134,16 +134,6 @@ public class GerenciadorDeArenas {
         this.stats.setTempoExecucao(tempo);
     }
 
-//    public void resetar() {
-//        for (ParticaoHeap p : particoes) {
-//            p.resetar(); // Supondo que ParticaoHeap tenha um método resetar
-//        }
-//        filaGeral.clear();
-//        stats.resetarStats();
-//        System.out.println("Simulador e estatísticas reiniciados.");
-//    }
-
-    // ... resto dos métodos (tentarAlocarComTravaDeLeitura, etc.)
     private boolean tentarAlocarComTravaDeLeitura(RequisicaoMemoria req) {
         travaLeitura.lock();
         try {
@@ -184,25 +174,20 @@ public class GerenciadorDeArenas {
         StringBuilder strBuilder = new StringBuilder();
         int contador = 0;
 
-        // Itera sobre a lista de todas as partições
         for (ParticaoHeap particao : particoes) {
-            // 1. Adiciona um título para cada partição
             strBuilder.append("--- Partição ").append(contador).append(" ---\n");
-
-            // 2. Chama o método da partição para obter sua representação em texto
             strBuilder.append(particao.representarAscii());
-            strBuilder.append("\n"); // Adiciona uma linha em branco para separar melhor
+            strBuilder.append("\n");
 
             contador++;
         }
 
-        // Retorna a string completa com todas as partições
         return strBuilder.toString();
     }
 
 
     /**
-     * NOVO: Calcula a porcentagem de ocupação agregada de todo o sistema.
+     * Calcula a porcentagem de ocupação agregada de todo o sistema.
      * Ele usa a trava de leitura para garantir uma leitura consistente do estado
      * das partições sem bloquear totalmente o sistema.
      * @return A porcentagem de ocupação total (0.0 a 100.0).

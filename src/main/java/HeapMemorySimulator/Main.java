@@ -71,7 +71,7 @@ public class Main {
             Thread.sleep(100);
         }
 
-        // --- Encerramento Gracioso ---
+        // --- Encerramento  ---
         System.out.println("\n--- Encerrando as Threads Trabalhadoras ---");
         for (TrabalhadorDeAlocacao t : trabalhadores) {
             t.shutdown();
@@ -97,7 +97,7 @@ public class Main {
         System.out.println(String.format("Ocupação Final: %.2f%%", ocupacaoFinal));
 
 
-        // --- NOVO: Salvar resultados em CSV ---
+        // --Salvar resultados em CSV ---
         System.out.println("\n--- Salvando Estatísticas em CSV ---");
         try {
             //Double ocupacaoFinal = gerenteDeArenas.getOcupacaoFinalPercentual();

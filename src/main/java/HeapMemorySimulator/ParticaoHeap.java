@@ -31,10 +31,8 @@ public class ParticaoHeap {
     public void desfragmentar() {
         travaLocal.lock();
         try {
-            //System.out.println("Thread " + Thread.currentThread().getId() + " desfragmentando uma partição...");
             int[] novaHeap = new int[this.heap.length];
             int proximoIndiceLivre = 0;
-
             // Copia todos os elementos diferente de 0 para o início da nova heap
             for (int i = 0; i < this.heap.length; i++) {
                 if (this.heap[i] != 0) {
@@ -51,7 +49,6 @@ public class ParticaoHeap {
         }
     }
 
-    // --- MÉTODO FALTANTE ADICIONADO AQUI ---
     /**
      * Libera todas as células de memória ocupadas por um determinado ID de requisição.
      * Este método é thread-safe, operando apenas em sua própria partição.
@@ -131,7 +128,6 @@ public class ParticaoHeap {
         try {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < heap.length; i++) {
-                // ESTA É A LÓGICA PRINCIPAL:
                 // Se heap[i] for 0, anexa ".", senão, anexa o ID da requisição.
                 sb.append(heap[i] == 0 ? ". " : String.valueOf(heap[i]) + " ");
 
@@ -148,7 +144,7 @@ public class ParticaoHeap {
     }
 
     /**
-     * NOVO: Retorna o número de posições ocupadas nesta partição.
+     * Retorna o número de posições ocupadas nesta partição.
      * O método é sincronizado pela trava local para garantir uma leitura consistente.
      * @return O número de células ocupadas.
      */
