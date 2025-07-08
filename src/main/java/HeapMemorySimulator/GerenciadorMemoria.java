@@ -22,7 +22,7 @@ public class GerenciadorMemoria {
     }
     public boolean alocar(RequisicaoMemoria req, boolean comDesfragmentacao, int porcentagem) {
         stats.novaRequisicao(req.getTamanho());
-        stats.adicionaOcupacao(heap.getPorcentagemOcupacao());
+       // stats.adicionaOcupacao(heap.getPorcentagemOcupacao());
 
         boolean sucesso = heap.alocarFirstFit(req.getId(), req.getTamanho());
         if (sucesso) {
